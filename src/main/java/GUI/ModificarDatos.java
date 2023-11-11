@@ -2,15 +2,21 @@
 package GUI;
 
 import Logica.Controladora;
+import Logica.Mascota;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-public class CargarDatos extends javax.swing.JFrame {
+public class ModificarDatos extends javax.swing.JFrame {
     
-    Controladora controladora = new Controladora();
+    Controladora controladora = null;
+    int num_cliente;
+    Mascota masco;
 
-    public CargarDatos() {
+    public ModificarDatos(int num_cliente) {
+        controladora = new Controladora();
+        //this.num_cliente=num_cliente;
         initComponents();
+        cargaDatos(num_cliente);
     }
 
     @SuppressWarnings("unchecked")
@@ -46,7 +52,7 @@ public class CargarDatos extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Carga de Datos");
+        jLabel1.setText("Modificar Datos");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Nombre:");
@@ -259,15 +265,20 @@ public class CargarDatos extends javax.swing.JFrame {
         String alergico = (String) cmbAlergico.getSelectedItem();
         String atencionEspecial = (String) cmbAtencionEspecial.getSelectedItem();
         
-        controladora.guardar(nombreMascota, raza, color, observaciones, celDuenio, nombreDuenio, alergico, atencionEspecial);
+        controladora.editarMascota(masco, nombreMascota, raza, color, observaciones, celDuenio, nombreDuenio, alergico, atencionEspecial);
         
-        JOptionPane jOption = new JOptionPane("Se guardó correctamente");
+        JOptionPane jOption = new JOptionPane("Se modificó correctamente");
         jOption.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-        JDialog dialog = jOption.createDialog("Garguado exitoso");
+        JDialog dialog = jOption.createDialog("Modificacion exitosa exitoso");
         dialog.setAlwaysOnTop(true);
         dialog.setVisible(true);
         
-        limpiarTxt();
+        VerDatos pantalla = new VerDatos();
+        pantalla.setVisible(true);
+        pantalla.setLocationRelativeTo(null);
+               
+        this.dispose();
+        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     
@@ -298,4 +309,27 @@ public class CargarDatos extends javax.swing.JFrame {
     private javax.swing.JTextArea txtObservaciones;
     private javax.swing.JTextField txtRaza;
     // End of variables declaration//GEN-END:variables
+
+    private void cargaDatos(int num_cliente) {
+        this.masco = controladora.traerMascota(num_cliente);
+        
+        txtNombre.setText(masco.getNombre());
+        txtRaza.setText(masco.getRaza());
+        txtColor.setText(masco.getColor());
+        txtObservaciones.setText(masco.getObservaciones());
+        txtCelDuenio.setText(masco.getUnDuenio().getNombre());
+        txtNombreDuenio.setText(masco.getUnDuenio().getNombre());
+        
+        if(masco.getAlergico().equals("SI")){
+            cmbAlergico.setSelectedIndex(1);
+        }else if(masco.getAlergico().equals("NO")){
+            cmbAlergico.setSelectedIndex(2);
+        }
+        
+        if(masco.getAtencionEspecial().equals("SI")){
+            cmbAlergico.setSelectedIndex(1);
+        }else if(masco.getAtencionEspecial().equals("NO")){
+            cmbAlergico.setSelectedIndex(2);
+        }
+    }
 }

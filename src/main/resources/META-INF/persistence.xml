@@ -5,11 +5,16 @@
     <class>Logica.Duenio</class>
     <class>Logica.Mascota</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/peluqueria_canina?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/peluqueria_canina?serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value=""/>
       <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <!-- Configuración para generación de tablas -->
+      <property name="eclipselink.ddl-generation" value="create-tables"/>
+      <!-- Opcionalmente, puedes agregar "drop-and-create-tables" para recrear las tablas en cada inicio. -->
+      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
     </properties>
   </persistence-unit>
 </persistence>
